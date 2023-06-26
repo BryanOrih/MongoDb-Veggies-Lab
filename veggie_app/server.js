@@ -2,7 +2,7 @@ const express = require('express')
 const path = require('path')
 require("dotenv").config()
 const app = express()
-const port = 3000
+const port = 3001
 require('./config/database.js')
 app.use(express.json())
 const {

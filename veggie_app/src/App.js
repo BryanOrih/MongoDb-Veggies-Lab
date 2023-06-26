@@ -1,7 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
-import { useState } from 'react';
+import axios from "axios"
+import { useEffect, useState } from 'react';
+import Display from './components/Display';
 function App() {
+  const [submitted, setSubmitted] = useState(0)
   const [input, setInput] = useState({
     name: '',
     description: '',
@@ -9,15 +12,28 @@ function App() {
   })
 
   const handleInput = (e) =>{
-    setInput({...input, [e.target.name]:e.target.value})
+    setInput({...input, [e.target.name]: e.target.name == "eatable"? e.target.checked : e.target.value})
   }
   const handleSubmit = (e) =>{
     e.preventDefault()
     if(Object.values(input).some(x => x === '')) return
-
+    axios({
+      method:"POST",
+      url:"/create_veggie",
+      data:{
+        name:`${input.name}`,
+        description:`${input.description}`,
+        eatable: input.eatable
+      }
+    })
+    setInput({
+      name: '',
+      description: '',
+      eatable: false
+    })
+    setSubmitted(submitted+1)
   }
   return (
-
     <div className="App">
       <h1>VEGGIE APP BABYYYY</h1>
       <form onSubmit={handleSubmit}>
@@ -32,6 +48,8 @@ function App() {
         <br/>
         <button>Submit</button>
       </form>
+      <br/>
+      <Display submitted={submitted}/>
     </div>
   );
 }

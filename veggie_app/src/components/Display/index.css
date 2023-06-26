@@ -1,0 +1,7 @@
+.display-list{
+    display: inline-block;
+    text-align: start;
+}
+/* .display-list > div > li{
+    cursor: pointer;
+} */
